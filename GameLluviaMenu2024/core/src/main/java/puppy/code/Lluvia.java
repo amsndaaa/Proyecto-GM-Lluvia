@@ -30,11 +30,10 @@ public class Lluvia {
     private float duracionViento = 6f;
     private boolean hayViento = false;
 
-	public Lluvia(Texture texturaCompleto, Texture texturaArepa, Sound ss, Music mm) {
+    //acá hicimos cambios no recibiendo los sonidos por parámetro, sino que delegando a GestorAudio()
+	public Lluvia(Texture texturaCompleto, Texture texturaArepa) {
 		this.texturaCompleto = texturaCompleto;
 		this.texturaArepa = texturaArepa;
-        this.dropSound = ss;
-        this.rainMusic = mm;
 
         this.caidaRecta = new CaidaRecta();
         this.caidaZigzag = new CaidaZigZag();
@@ -46,9 +45,8 @@ public class Lluvia {
 		rainDropsPos = new Array<Rectangle>();
 		rainDropsType = new Array<Integer>();
 		crearGotaDeLluvia();
-	      // start the playback of the background music immediately
-	      rainMusic.setLooping(true);
-	      rainMusic.play();
+	      // start the playback of the background music immediately (cambiaddo para ahora utilizar Singleton)
+          GestorAudio.getInstance().reproducirMusica();
 	}
 
 	private void crearGotaDeLluvia() {
@@ -96,7 +94,7 @@ public class Lluvia {
                     }
                 } else { // Completo
                     tarro.sumarPuntos(10);
-                    dropSound.play();
+                    GestorAudio.getInstance().reproducirComerCompleto();
                 }
                 rainDropsPos.removeIndex(i);
                 rainDropsType.removeIndex(i);
@@ -143,15 +141,14 @@ public class Lluvia {
 			 batch.draw(texturaCompleto, raindrop.x, raindrop.y);
 	   }
    }
-   public void destruir() {
-      dropSound.dispose();
-      rainMusic.dispose();
+   public void destruir(){
+      // ahora esto lo dejamos delegado al GestorAudio
    }
-   public void pausar() {
-	  rainMusic.stop();
+   public void pausar(){
+        GestorAudio.getInstance().pausarMusica();
    }
-   public void continuar() {
-	  rainMusic.play();
+   public void continuar(){
+       GestorAudio.getInstance().reproducirMusica();
    }
 
 }
