@@ -11,8 +11,8 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 
 public class Lluvia {
-	private Array<Rectangle> rainDropsPos;
-	private Array<Integer> rainDropsType;
+    // implementaci´on de lista que alamacena completos y arepas
+    private Array<Comestible> comestibles;
     private long lastDropTime;
     private Texture texturaCompleto;
     private Texture texturaArepa;
@@ -42,25 +42,21 @@ public class Lluvia {
 	}
 
 	public void crear() {
-		rainDropsPos = new Array<Rectangle>();
-		rainDropsType = new Array<Integer>();
+        comestibles = new Array<Comestible>();
 		crearGotaDeLluvia();
 	      // start the playback of the background music immediately (cambiaddo para ahora utilizar Singleton)
           GestorAudio.getInstance().reproducirMusica();
 	}
 
 	private void crearGotaDeLluvia() {
-        Rectangle raindrop = new Rectangle();
-        raindrop.x = MathUtils.random(0, 800 - 64);
-        raindrop.y = 480;
-        raindrop.width = 64;
-        raindrop.height = 64;
-        rainDropsPos.add(raindrop);
+        float xAzar = MathUtils.random(0, 800 - 64);
+        float yFijo = 480;
+
         // 35% de probabilidad spawneo de arepas y 65% de completos
         if (MathUtils.random(1, 100) <= 35){
-            rainDropsType.add(1);
+            comestibles.add(new Arepa(xAzar, yFijo, texturaArepa));
         }else{
-            rainDropsType.add(2);
+            comestibles.add(new Completo(xAzar, yFijo, texturaCompleto));
         }
         lastDropTime = TimeUtils.nanoTime();
 
@@ -75,29 +71,23 @@ public class Lluvia {
         if (TimeUtils.nanoTime() - lastDropTime > 350000000) {
             crearGotaDeLluvia();
         }
-        for (int i = 0; i < rainDropsPos.size; i++) {
-            Rectangle raindrop = rainDropsPos.get(i);
+        for (int i = 0; i < comestibles.size; i++) {
+            Comestible item = comestibles.get(i);
             // Uso del patrón Strategy
-            estrategiaActual.mover(raindrop, delta, tiempoGlobal);
+            estrategiaActual.mover(item.getArea(), delta, tiempoGlobal);
             // Si cae al suelo
-            if (raindrop.y + 64 < 0) {
-                rainDropsPos.removeIndex(i);
-                rainDropsType.removeIndex(i);
+            if (item.getArea().y + 64 < 0) {
+                comestibles.removeIndex(i);
                 continue;
             }
             // Colisión con el tarro
-            if (raindrop.overlaps(tarro.getArea())) {
-                if (rainDropsType.get(i) == 1) { // Arepa
-                    tarro.dañar();
-                    if (tarro.getVidas() <= 0) {
-                        return false; // Game Over
-                    }
-                } else { // Completo
-                    tarro.sumarPuntos(10);
-                    GestorAudio.getInstance().reproducirComerCompleto();
+            if (item.getArea().overlaps(tarro.getArea())) {
+                // llamada al template method
+                item.procesarColision(tarro);
+                if (tarro.getVidas() <= 0) {
+                    return false; // Game Over
                 }
-                rainDropsPos.removeIndex(i);
-                rainDropsType.removeIndex(i);
+                comestibles.removeIndex(i);
             }
         }
         return true;
@@ -133,12 +123,8 @@ public class Lluvia {
 
    public void actualizarDibujoLluvia(SpriteBatch batch) {
 
-	  for (int i=0; i < rainDropsPos.size; i++ ) {
-		  Rectangle raindrop = rainDropsPos.get(i);
-		  if(rainDropsType.get(i)==1) // gota dañina
-	         batch.draw(texturaArepa, raindrop.x, raindrop.y);
-		  else
-			 batch.draw(texturaCompleto, raindrop.x, raindrop.y);
+	  for (int i=0; i < comestibles.size; i++ ) {
+          comestibles.get(i).dibujar(batch);
 	   }
    }
    public void destruir(){
