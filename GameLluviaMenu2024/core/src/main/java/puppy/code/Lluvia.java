@@ -124,8 +124,10 @@ public class Lluvia {
         if (activar){
             this.estrategiaActual = caidaZigzag;
             this.doradoLanzadoEnEstaRafaga = false;
+            GestorAudio.getInstance().reproducirViento();
         }else{
             this.estrategiaActual = caidaRecta;
+            GestorAudio.getInstance().detenerViento();
         }
    }
 

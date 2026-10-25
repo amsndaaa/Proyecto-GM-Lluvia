@@ -11,11 +11,15 @@ public class GestorAudio{
     private Music musicaFondo;
     private Sound sonidoComerCompleto;
     private Sound sonidoHerido;
+    private Sound sonidoTomarTerremoto;
+    private Sound sonidoViento;
 
     private GestorAudio(){
-        musicaFondo = Gdx.audio.newMusic(Gdx.files.internal("rain.mp3"));
-        sonidoComerCompleto = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));
+        musicaFondo = Gdx.audio.newMusic(Gdx.files.internal("musica.mp3"));
+        sonidoComerCompleto = Gdx.audio.newSound(Gdx.files.internal("comer.wav"));
         sonidoHerido = Gdx.audio.newSound(Gdx.files.internal("hurt.ogg"));
+        sonidoTomarTerremoto = Gdx.audio.newSound(Gdx.files.internal("tomar.mp3"));
+        sonidoViento = Gdx.audio.newSound(Gdx.files.internal("viento.wav"));
         musicaFondo.setLooping(true);
     }
     // método para acceder en todo el proyecto a esa única instancia
@@ -44,8 +48,18 @@ public class GestorAudio{
     public void reproducirComerCompleto(){
         sonidoComerCompleto.play();
     }
+    public void reproducirTomarTerremoto(){
+        sonidoTomarTerremoto.play();
+    }
     public void reproducirHerido() {
         sonidoHerido.play();
+    }
+    public void reproducirViento(){
+        sonidoViento.play();
+    }
+    // creamos este método para detener el sonido
+    public void detenerViento(){
+        sonidoViento.stop();
     }
 
 
@@ -53,6 +67,8 @@ public class GestorAudio{
         musicaFondo.dispose();
         sonidoComerCompleto.dispose();
         sonidoHerido.dispose();
+        sonidoTomarTerremoto.dispose();
+        sonidoViento.dispose();
         instancia = null;
     }
 }

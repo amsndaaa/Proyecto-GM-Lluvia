@@ -30,7 +30,7 @@ public class Terremoto extends Comestible{
     }
     @Override
     protected void reproducirSonido(){
-        GestorAudio.getInstance().reproducirComerCompleto();
+        GestorAudio.getInstance().reproducirTomarTerremoto();
     }
     @Override
     public void dibujar(SpriteBatch batch){

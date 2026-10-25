@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.Input;
 
 public class GameScreen implements Screen {
 	final GameLluviaMenu game;
@@ -63,6 +64,11 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void render(float delta) {
+        // metimos esto para pausar presionando tecla esc
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
+            pause();
+            return;
+        }
 		//limpia la pantalla con color azul obscuro.
 		ScreenUtils.clear(0, 0, 0.2f, 1);
 		//actualizar matrices de la cámara
