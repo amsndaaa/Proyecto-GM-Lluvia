@@ -17,8 +17,6 @@ public class Lluvia {
     private Texture texturaCompleto;
     private Texture texturaArepa;
     private Texture texturaTerremoto;
-    private Sound dropSound;
-    private Music rainMusic;
 
     // atributos agregados por la incorporación del patrón Strategy
     private CaidaStrategy estrategiaActual;

@@ -44,9 +44,9 @@ public class GameScreen implements Screen {
 		  tarro = new Tarro(new Texture(Gdx.files.internal("bucket.png")),hurtSound);
 
 	      // load the drop sound effect and the rain background "music"
-         Texture texturaCompleto = new Texture(Gdx.files.internal("drop.png"));
-         Texture texturaArepa = new Texture(Gdx.files.internal("dropBad.png"));
-         Texture texturaTerremoto = new Texture(Gdx.files.internal("terremoto.png"));
+         texturaCompleto = new Texture(Gdx.files.internal("drop.png"));
+         texturaArepa = new Texture(Gdx.files.internal("dropBad.png"));
+         texturaTerremoto = new Texture(Gdx.files.internal("terremoto.png"));
 
          lluvia = new Lluvia(texturaCompleto, texturaArepa, texturaTerremoto);
 

@@ -36,11 +36,11 @@ public class Terremoto extends Comestible{
     public void dibujar(SpriteBatch batch){
         if (tieneEfectoResplandor){
             batch.setColor(Color.WHITE);
-            batch.draw(textura, area.x - 5, area.y - 5, 74, 74);
+            batch.draw(getTextura(), getArea().x - 5, getArea().y - 5, 74, 74);
             // efecto de respnlandor/brillante para los terremotos que aparezcan
             batch.setBlendFunction(com.badlogic.gdx.graphics.GL20.GL_SRC_ALPHA, com.badlogic.gdx.graphics.GL20.GL_ONE);
             batch.setColor(1.0f, 0.85f, 0.1f, 0.7f);
-            batch.draw(textura, area.x - 5, area.y - 5, 74, 74);
+            batch.draw(getTextura(), getArea().x - 5, getArea().y - 5, 74, 74);
             batch.setBlendFunction(com.badlogic.gdx.graphics.GL20.GL_SRC_ALPHA, com.badlogic.gdx.graphics.GL20.GL_ONE_MINUS_SRC_ALPHA);
             batch.setColor(Color.WHITE);
         }else{

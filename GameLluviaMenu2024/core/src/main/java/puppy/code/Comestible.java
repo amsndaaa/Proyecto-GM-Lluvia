@@ -6,8 +6,8 @@ import com.badlogic.gdx.math.Rectangle;
 
 // clase abstracta para los distintos ítems que caen en el juego
 public abstract class Comestible{
-    protected Rectangle area;
-    protected Texture textura;
+    private Rectangle area;
+    private Texture textura;
 
     public Comestible(float x, float y, Texture textura){
         this.area = new Rectangle();
@@ -33,5 +33,8 @@ public abstract class Comestible{
     }
     public Rectangle getArea(){
         return area;
+    }
+    public Texture getTextura(){
+        return textura;
     }
 }
