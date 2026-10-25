@@ -1,8 +1,11 @@
 bucket.png
+comer.wav
 drop.png
-drop.wav
 dropBad.png
 fondo_dieciochero.png
 fondo_volantines.png
 hurt.ogg
-rain.mp3
+musica.mp3
+terremoto.png
+tomar.mp3
+viento.wav
