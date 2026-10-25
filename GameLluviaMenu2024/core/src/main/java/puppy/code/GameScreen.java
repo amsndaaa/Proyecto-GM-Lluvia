@@ -22,6 +22,10 @@ public class GameScreen implements Screen {
     private Texture fondoNormal;
     private Texture fondoViento;
 
+    private Texture texturaCompleto;
+    private Texture texturaArepa;
+    private Texture texturaTerremoto;
+
 
 	//boolean activo = true;
 
@@ -42,11 +46,9 @@ public class GameScreen implements Screen {
 	      // load the drop sound effect and the rain background "music"
          Texture texturaCompleto = new Texture(Gdx.files.internal("drop.png"));
          Texture texturaArepa = new Texture(Gdx.files.internal("dropBad.png"));
+         Texture texturaTerremoto = new Texture(Gdx.files.internal("terremoto.png"));
 
-         Sound dropSound = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));
-
-	     Music rainMusic = Gdx.audio.newMusic(Gdx.files.internal("rain.mp3"));
-         lluvia = new Lluvia(texturaCompleto, texturaArepa, dropSound, rainMusic);
+         lluvia = new Lluvia(texturaCompleto, texturaArepa, texturaTerremoto);
 
 	      // camera
 	      camera = new OrthographicCamera();
@@ -135,6 +137,10 @@ public class GameScreen implements Screen {
       lluvia.destruir();
       fondoNormal.dispose();
       fondoViento.dispose();
+      texturaCompleto.dispose();
+      texturaArepa.dispose();
+      texturaTerremoto.dispose();
+      GestorAudio.getInstance().destruir();
 
 	}
 

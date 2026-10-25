@@ -39,6 +39,12 @@ public class Tarro {
 		public void sumarPuntos(int pp) {
 			puntos+=pp;
 		}
+        public void sumarVida(){
+            if (vidas < 3){ // limitamos al valor inicial por defecto de 3 vidas máximo
+                vidas++;
+            }
+        }
+
 
 
 	   public void crear() {

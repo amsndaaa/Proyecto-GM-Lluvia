@@ -16,6 +16,7 @@ public class Lluvia {
     private long lastDropTime;
     private Texture texturaCompleto;
     private Texture texturaArepa;
+    private Texture texturaTerremoto;
     private Sound dropSound;
     private Music rainMusic;
 
@@ -29,15 +30,22 @@ public class Lluvia {
     private float tiempoParaViento = 10f;
     private float duracionViento = 6f;
     private boolean hayViento = false;
+    private boolean doradoLanzadoEnEstaRafaga = false;
+    // atributos para implmnetar en patrón builder
+    private TerremotoBuilder terremotoBuilder;
+    private GarzonFondero garzonFondero;
 
     //acá hicimos cambios no recibiendo los sonidos por parámetro, sino que delegando a GestorAudio()
-	public Lluvia(Texture texturaCompleto, Texture texturaArepa) {
+	public Lluvia(Texture texturaCompleto, Texture texturaArepa, Texture texturaTerremoto) {
 		this.texturaCompleto = texturaCompleto;
 		this.texturaArepa = texturaArepa;
+        this.texturaTerremoto = texturaTerremoto;
 
         this.caidaRecta = new CaidaRecta();
         this.caidaZigzag = new CaidaZigZag();
         this.estrategiaActual = caidaRecta;
+        this.terremotoBuilder = new TerremotoFonderoBuilder();
+        this.garzonFondero = new GarzonFondero(terremotoBuilder);
 
 	}
 
@@ -52,9 +60,14 @@ public class Lluvia {
         float xAzar = MathUtils.random(0, 800 - 64);
         float yFijo = 480;
 
-        // 35% de probabilidad spawneo de arepas y 65% de completos
-        if (MathUtils.random(1, 100) <= 35){
-            comestibles.add(new Arepa(xAzar, yFijo, texturaArepa));
+        // generar elemento dorado (completo especieal) si hay viento y aún no se ha generado
+        if(hayViento && !doradoLanzadoEnEstaRafaga){
+            doradoLanzadoEnEstaRafaga = true;
+            Terremoto trago = garzonFondero.prepararTerremoto(xAzar, yFijo, texturaTerremoto);
+            comestibles.add(trago);
+            // 35% de probabilidad spawneo de arepas y 65% de completos
+        }else if(MathUtils.random(1, 100) <= 35){
+                comestibles.add(new Arepa(xAzar, yFijo, texturaArepa));
         }else{
             comestibles.add(new Completo(xAzar, yFijo, texturaCompleto));
         }
@@ -112,6 +125,7 @@ public class Lluvia {
         this.hayViento = activar;
         if (activar){
             this.estrategiaActual = caidaZigzag;
+            this.doradoLanzadoEnEstaRafaga = false;
         }else{
             this.estrategiaActual = caidaRecta;
         }
