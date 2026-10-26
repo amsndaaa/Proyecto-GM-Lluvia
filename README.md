@@ -3,7 +3,7 @@ Proyecto de **Programación Avanzada**
 INF2236 · PUCV · Segundo semestre 2026
 ---
 ## Objetivo
-El proyecto consiste en un videojuego desarrollado en Java con el motor **LibGDX**. Su objetivo es controlar al "Huaso", quien debe desplazarse por la pantalla recolectando alimentos dieciocheros para sumar puntos y esquivar elementos perjudiciales que le quitan vidas.
+El proyecto consiste en un videojuego desarrollado en Java con el framework **LibGDX**. Su objetivo es controlar al "Huaso", quien debe desplazarse por la pantalla recolectando alimentos dieciocheros para sumar puntos y esquivar elementos perjudiciales que le quitan vidas.
 El juego cuenta principalmente con los siguientes 3 elementos:
 * **Completos:** Otorgan 10 puntos por cada que se consuma.
 * **Arepas:** Quitan 1 vida al ser consumidas por el jugador (de un total de 3 vidas).
